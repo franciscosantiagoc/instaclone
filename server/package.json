@@ -1,0 +1,17 @@
+{
+  "name": "instaclone",
+  "version": "1.0.0",
+  "description": "Servidor de la aplicacion instaclone",
+  "main": "index.js",
+  "author": "Francisco Santiago",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "apollo-server": "^3.7.0",
+    "dotenv": "^16.0.1",
+    "graphql": "^16.5.0",
+    "mongoose": "^6.3.3"
+  }
+}
