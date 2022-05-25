@@ -14,9 +14,20 @@ const typeDefs = gql`
     createAt: String
   }
 
+  input UserInput {
+    name: String! # el signo ! determina que un campo es obligatorio
+    username: String!
+    email: String!
+    password: String!
+  }
+
   type Query {
     # User
     getUser: User
+  }
+  type Mutation {
+    #User
+    register(input: UserInput): User
   }
 `;
 
