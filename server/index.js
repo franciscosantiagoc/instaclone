@@ -21,7 +21,7 @@ function server() {
     resolvers,
   });
 
-  serverApollo.listen().then(({ url }) => {
+  serverApollo.listen().then(({ url }) => {//cachamos la respuesta de la promesa, pero nos interesa solo la url, por lo que destructuramos
     console.log(`Servidor ON ${ url }`);
   })
 }
