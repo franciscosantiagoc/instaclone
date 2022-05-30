@@ -7,7 +7,13 @@
   flex-direction: column;
   height: 100vh;
   background-color: $background-gray-light;
-
+  
+  .containerIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
   img{
     width: 250px;
   }

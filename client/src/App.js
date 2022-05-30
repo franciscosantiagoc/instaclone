@@ -12,6 +12,7 @@ export default function App() {
      {
        !auth ? <Auth/> : <h1>Estas logueado</h1>
      }
+     
      <ToastContainer 
      position='top-right' 
      autoClose={5000}
