@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Image } from 'semantic-ui-react';
 import userIcon from '../../../assets/img/user-icon.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../../../gql/user';
+import { setToken } from '../../../utils/token';
+import useAuth from '../../../hooks/useAuth';
 import './LoginForm.scss';
 
 export default function LoginForm() {
+  const [error, setError] = useState('')
+  const [login] = useMutation(LOGIN);
+
+  const { setUser } = useAuth();
+  
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object({
@@ -15,8 +25,21 @@ export default function LoginForm() {
       password: Yup.string()
         .required("Ingrese una contraseña"),
     }),
-    onSubmit: (formData) => {
-      console.log(formData)
+    onSubmit: async (formData) => {
+      setError("");
+      try {
+        const { data } = await login({
+          variables: {
+            input: formData,
+          }
+        });
+        const { token } = data.login;
+        setToken(token);
+        setUser(token);
+      } catch (error) {
+        setError(error.message);
+        console.log(error)
+      }
     }
   })
   return (
@@ -44,6 +67,7 @@ export default function LoginForm() {
       <Button type="submit" className="btn-submit">
         Iniciar sesión
       </Button>
+      {error && <p className='submit-error'>{error}</p>}
     </Form>
   )
 }
