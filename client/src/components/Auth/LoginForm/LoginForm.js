@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../../gql/user';
-import { setToken } from '../../../utils/token';
+import { setToken, decodeToken } from '../../../utils/token';
 import useAuth from '../../../hooks/useAuth';
 import './LoginForm.scss';
 
@@ -35,7 +35,7 @@ export default function LoginForm() {
         });
         const { token } = data.login;
         setToken(token);
-        setUser(token);
+        setUser(decodeToken(token));
       } catch (error) {
         setError(error.message);
         console.log(error)
