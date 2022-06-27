@@ -8,7 +8,7 @@ import AuthContext from './context/AuthContext';
 import Navigation from './routes/Navigation';
 
 export default function App() {
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState(undefined);
 
   useEffect(() => {
      const token = getToken();
