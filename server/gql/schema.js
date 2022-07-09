@@ -1,5 +1,5 @@
 //se define los tipos que vamos a usar graphql
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   scalar Upload
