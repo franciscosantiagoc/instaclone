@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const { ApolloServer } = require("apollo-server-express");
 const mongoose = require("mongoose");
 const express = require("express");
@@ -21,6 +22,23 @@ async function server() {
   const serverApollo = new ApolloServer({
     typeDefs,
     resolvers,
+    context: ({ req }) => {//desestructuramos req de headers
+      const token = req.headers.authorization;
+      if( token ) {
+        try {
+          const user = jwt.verify(
+            token.replace('Bearer ',''),
+            process.env.SECRET_KEY,
+          );
+          return {
+            user
+          }
+        } catch (error) {
+          console.log('Error', Error)
+          throw new Error("Token invalido");
+        }
+      }
+    }
   });
 
   await serverApollo.start();
@@ -29,8 +47,8 @@ async function server() {
   app.use(graphqlUploadExpress());
   serverApollo.applyMiddleware({ app });
 
-  await app.listen(process.env.PORT || 4000, () => {
-    console.log(`Servidor ON http://localhost:${ process.env.PORT || 4000 }`);
+  await app.listen(process.env.PORT || 3001, () => {
+    console.log(`Servidor ON http://localhost:${ process.env.PORT || 3001 }`);
   });
   /* serverApollo.listen().then(({ url }) => {//cachamos la respuesta de la promesa, pero nos interesa solo la url, por lo que destructuramos
     console.log(`Servidor ON ${ url }`);

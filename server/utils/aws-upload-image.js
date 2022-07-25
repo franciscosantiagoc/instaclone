@@ -1,4 +1,4 @@
-requiere("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env" });
 const AWS = require("aws-sdk");
 
 const ID = process.env.AWS_ID;
