@@ -70,21 +70,23 @@ async function getUser(id, username) {
 }
 
 async function updateAvatar(file, ctx) {
+  const  { id } = ctx.user;
   const { createReadStream, mimetype } = await file;
   const extension = mimetype.split("/")[1];
-  const imageName = `avatar/avt.${extension}`;
+  const imageName = `avatar/${id}.${extension}`;
   const fileData = createReadStream(imageName);
   try {
     const result = await awsUploadImage(fileData, imageName);
-    console.log("result", result);
+    return {
+      status: true,
+      urlAvatar: result,
+    }
   } catch (error) {
     return {
       status: false,
       urlAvatar: null,
     };
   }
-  /* console.log("Ejecutando updateAvatar")
-  console.log('ctx', ctx) */
 
   return null;
 }
