@@ -44,13 +44,15 @@ async function server() {
   await serverApollo.start();
   const app = express();
 
+  
+
+  app.use(graphqlUploadExpress());
+  serverApollo.applyMiddleware({ app });
+
   app.use('/', (req, res) => {
     console.log('Principal ejecutado correctamente')
     res.send('<h1>Servidor ejecutado correctamente</h1>')
   });
-
-  app.use(graphqlUploadExpress());
-  serverApollo.applyMiddleware({ app });
 
   await app.listen(process.env.PORT || 3001, () => {
     console.log(`Servidor ON http://localhost:${ process.env.PORT || 3001 }`);
