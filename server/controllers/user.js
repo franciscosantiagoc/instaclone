@@ -77,6 +77,7 @@ async function updateAvatar(file, ctx) {
   const fileData = createReadStream(imageName);
   try {
     const result = await awsUploadImage(fileData, imageName);
+    await User.findByIdAndUpdate(id, { avatar: result})
     return {
       status: true,
       urlAvatar: result,
