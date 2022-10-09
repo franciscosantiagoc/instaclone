@@ -44,6 +44,11 @@ async function server() {
   await serverApollo.start();
   const app = express();
 
+  app.use('/', (req, res) => {
+    console.log('Principal ejecutado correctamente')
+    res.send('<h1>Servidor ejecutado correctamente</h1>')
+  });
+
   app.use(graphqlUploadExpress());
   serverApollo.applyMiddleware({ app });
 
