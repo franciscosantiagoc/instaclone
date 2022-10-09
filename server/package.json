@@ -6,7 +6,8 @@
   "author": "Francisco Santiago",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js"
   },
   "dependencies": {
     "apollo-server": "^3.7.0",
