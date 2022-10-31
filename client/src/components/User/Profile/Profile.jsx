@@ -6,6 +6,7 @@ import userAuth from "../../../hooks/useAuth";
 import UserNotFound from "../../UserNotFound/UserNotFound";
 import ModalBasic from "../../Modal/ModalBasic/ModalBasic";
 import AvatarForm from "../AvatarForm/AvatarForm";
+import HeaderProfile from "./HeaderProfile/HeaderProfile";
 import ImageNotFound from "../../../assets/img/avatar.png";
 import "./Profile.scss";
 
@@ -51,7 +52,7 @@ export default function Profile(props) {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <div>Header profile</div>
+          <HeaderProfile getUser={getUser} auth={auth}/>
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser.name}</p>
