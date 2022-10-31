@@ -75,8 +75,7 @@ export default function AvatarForm(props) {
   const { getRootProps, getInputProps } = useDropzone({
     /* accept: ["image/jpeg", "image/png"], */
     accept: {
-      "image/png": [".png"],
-      "image/jpeg": [".jpeg", ".jpg"],
+      "image/jpeg": [".png",".jpeg", ".jpg"]
     },
     noKeyboard: true,
     multiple: false,

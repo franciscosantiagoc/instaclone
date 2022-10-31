@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const awsUploadImage = require("../utils/aws-upload-image");
+const awsDeleteImage = require("../utils/aws-delete-image");
 
 function createToken(user, SECRET_KEY, expiresIn) {
   const { id, name, email, username } = user;
@@ -76,13 +77,19 @@ async function updateAvatar(file, ctx) {
   const imageName = `avatar/${id}.${extension}`;
   const fileData = createReadStream(imageName);
   try {
+    let { avatar=null } = await User.findById(id);
+    if(avatar!=null){
+      let splitAvatar = avatar.split('avatar/');
+      await awsDeleteImage(`avatar/${splitAvatar[1]}`);
+    }
     const result = await awsUploadImage(fileData, imageName);
     await User.findByIdAndUpdate(id, { avatar: result})
     return {
       status: true,
-      urlAvatar: result,
+      urlAvatar:  result,
     }
   } catch (error) {
+    console.log('error', error)
     return {
       status: false,
       urlAvatar: null,
